@@ -13,5 +13,9 @@ dependencyResolutionManagement {
     }
 }
 
-rootProject.name = "multiplatform-library-template"
+rootProject.name = "cmp-animatedcounter"
 include(":library")
+for (child in rootProject.children) {
+    if (child.name == "library")
+        child.name = "cmp-animatedcounter"
+}
