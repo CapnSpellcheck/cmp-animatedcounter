@@ -1,6 +1,14 @@
 # cmp-animatedcounter
 A counter widget that animates changes by spinning through intermediate values, using 
-[Compose Multiplatform (CMP)](https://www.jetbrains.com/compose-multiplatform/).
+[Compose Multiplatform (CMP)](https://www.jetbrains.com/compose-multiplatform/). I implemented this after 
+trying to use other number-ticker or rolling-number type widgets and being frustrated with them.  
+With this widget, a number increase always animates the digits from above.
+
+This widget looks best when changes to the number are relatively small.
+
+
+https://github.com/user-attachments/assets/6855a0d8-0b54-4d0a-9588-62544132d1ff
+
 
 ## Integration
 This library is deployed to GitHub Packages. Unlike Maven Central, GitHub requires authentication just to fetch. 
@@ -21,7 +29,7 @@ maven {
     }
 }
 ```
-Note: you can change the names of the environment variables as you wish.  
+You need to set these 2 environment variables or create a `gradle.properties` in `~/.gradle/gradle.properties`. Note: you can change the names of the environment variables as you wish.  
 Your whole `dependencyResolutionManagement` might look like this:
 ```
 dependencyResolutionManagement {
@@ -70,7 +78,12 @@ The only required parameter is the `value`. `AnimatedCounter` will animate chang
 
 Jump to the source definition to see details of the optional parameters.
 
-## Missing Features / Possible Enhancements
+## Performance implications
+I am not sure of the performance characteristic of extensive clipped drawing in Compose. Possibly the drawing is executed.
+If the `value` has large changes, say 100+, it's possible to lose frames on devices with slow CPUs, probably
+at the beginning of the animation.
+
+## Missing features / Possible enhancements
 While I didn't use any of these ideas myself, I can see how they might be useful, and certainly fit within 
 the widget's purpose. While I probably won't flesh these out myself, I will review pull requests. Please
 make sure the feature is demoable in the project example.
@@ -80,3 +93,5 @@ so the entire drawing offsets would be flipped.
 - Option to show thousands groupings: For large values, it could be more readable to show group separators.
 - Option to show a small number of decimal places. You'd probably want to add a fixed decimal type, have fun with finding 
 a good KMP one.
+- Re-entrant animation: If the value is changed while the current value is still animating, it doesn't handle it gracefully. It will
+jump to the previous final value and start a new animation to the new final value.
