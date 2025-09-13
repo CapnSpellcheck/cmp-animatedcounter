@@ -19,3 +19,4 @@ for (child in rootProject.children) {
     if (child.name == "library")
         child.name = "cmp-animatedcounter"
 }
+include(":sample")
