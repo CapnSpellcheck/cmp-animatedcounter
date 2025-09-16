@@ -83,7 +83,8 @@ public fun AnimatedCounter(
                animationDelayMsec,
                animationDurationMsec,
                deltas[i],
-               i < numberOfNewDigits
+               i < numberOfNewDigits,
+               value
             )
          }
       }
@@ -100,9 +101,10 @@ private fun AnimatedNumberDigit(
    delayMsec: Int = 0,
    durationMsec: Int,
    delta: Int = 0,
-   skipLastDraw: Boolean = false
+   omitLastDraw: Boolean = false,
+   skipControl: UInt = 0u
 ) {
-   val offsetAnimatable = remember(finalDigit, delta) {
+   val offsetAnimatable = remember(finalDigit, delta, skipControl) {
       Animatable(-delta.toFloat() * heightPx)
    }
 
@@ -122,7 +124,7 @@ private fun AnimatedNumberDigit(
          // (highest positive) offset, in case of positive and negative delta, respectively.
          var digitChar = finalDigit
          var topLeft = Offset.Zero
-         repeat(abs(delta) + if (skipLastDraw) 0 else 1) {
+         repeat(abs(delta) + if (omitLastDraw) 0 else 1) {
             drawTextUnbounded(measurer, digitChar.toString(), topLeft, style)
             if (delta > 0) {
                digitChar = when (digitChar) {
