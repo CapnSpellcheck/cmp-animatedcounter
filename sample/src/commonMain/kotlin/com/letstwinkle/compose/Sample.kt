@@ -30,6 +30,7 @@ fun Sample() {
     var value by remember { mutableIntStateOf(100) }
     val valueU = remember { derivedStateOf { value.toUInt() } }
     var delta by remember { mutableIntStateOf(1) }
+    var numberOfMinorDigitsThatNeverAnimate by remember { mutableIntStateOf(0) }
     Column(
         Modifier.fillMaxSize(),
         verticalArrangement = Arrangement.Center,
@@ -40,7 +41,8 @@ fun Sample() {
             valueU.value,
             Modifier.padding(vertical = 12.dp),
             textStyle = TextStyle(fontSize = 28.sp, fontWeight = FontWeight.SemiBold),
-            animationDurationMsec = 533
+            animationDurationMsec = 533,
+            numberOfEndDigitsThatNeverAnimate = numberOfMinorDigitsThatNeverAnimate
         )
         TextField(
             value = delta.toString(),
@@ -59,6 +61,18 @@ fun Sample() {
             Button({ value = max(0, value - delta) }) {
                 Text("DOWN")
             }
+        }
+        Row(Modifier.padding(vertical = 16.dp)) {
+            Text("numberOfMinorDigitsThatNeverAnimate")
+            TextField(
+                value = numberOfMinorDigitsThatNeverAnimate.toString(),
+                onValueChange = {
+                    try {
+                        numberOfMinorDigitsThatNeverAnimate = it.toInt()
+                    } catch (ex: Throwable) {}
+                },
+                keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Number),
+            )
         }
     }
 }

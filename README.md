@@ -71,7 +71,8 @@ AnimatedCounter(
    animationDelayMsec = 500,
    animationDurationMsec = 500,
    digitSpacing = 1.dp,
-   textStyle = TextStyle(fontSize = 24.sp, fontWeight = FontWeight.Medium)
+   textStyle = TextStyle(fontSize = 24.sp, fontWeight = FontWeight.Medium),
+   numberOfEndDigitsThatNeverAnimate = 1,
 )
 ```
 The only required parameter is the `value`. `AnimatedCounter` will animate changes to value, including decreases which are allowed. However, value cannot be negative.

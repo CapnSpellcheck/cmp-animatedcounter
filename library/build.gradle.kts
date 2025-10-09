@@ -11,7 +11,7 @@ plugins {
 }
 
 group = "com.letstwinkle"
-version = "1.0.1"
+version = "1.0.2"
 
 kotlin {
     jvm()
@@ -32,6 +32,7 @@ kotlin {
                 //put your multiplatform dependencies here
                 implementation(compose.foundation)
                 implementation(compose.ui)
+                implementation(compose.material3)
             }
         }
         val commonTest by getting {

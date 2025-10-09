@@ -2,6 +2,7 @@ package com.letstwinkle.compose
 
 import androidx.compose.animation.core.*
 import androidx.compose.foundation.layout.*
+import androidx.compose.material3.Text
 import androidx.compose.runtime.*
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.*
@@ -30,6 +31,11 @@ import kotlin.math.*
  * @param digitSpacing In some font-platform combinations, numbers can look a bit squished. This
  *        Dp value adds the provided number of dp's between the digits, 0 by default.
  * @param textStyle The Text style to use for the digits. By default, a default font at 24sp.
+ * @param numberOfEndDigitsThatNeverAnimate If your counter's value is always a multiple of ten or
+ *        hundred, you might wish to skip animating the end digits; otherwise they could spin
+ *        through a hundred values, which of course would look like a blur. For example,
+ *        if this counter represents a score that's always incremented by 100, you could set this to
+ *        `2`. 0 by default.
  */
 @Composable
 public fun AnimatedCounter(
@@ -38,7 +44,8 @@ public fun AnimatedCounter(
    animationDelayMsec: Int = 0,
    animationDurationMsec: Int = AnimationConstants.DefaultDurationMillis,
    digitSpacing: Dp = 0.dp,
-   textStyle: TextStyle = TextStyle(fontSize = 24.sp)
+   textStyle: TextStyle = TextStyle(fontSize = 24.sp),
+   numberOfEndDigitsThatNeverAnimate: Int = 0,
 ) {
    val measurer = rememberTextMeasurer(10)
    val previousValue = rememberPrevious(value)
@@ -71,10 +78,18 @@ public fun AnimatedCounter(
    
    Row(modifier, horizontalArrangement = Arrangement.spacedBy(digitSpacing)) {
       val dpSize = with(LocalDensity.current) { DpSize(digitSize.width.toDp(), digitSize.height.toDp()) }
-      valueString.toCharArray().forEachIndexed { i, digitChar ->
+      valueString.forEachIndexed { i, digitChar ->
          // keys fixed from right side, so ones stays ones, etc.
-         key(valueString.length - i) {
-            AnimatedNumberDigit(
+         val reverseIndex = valueString.length - i
+         key(reverseIndex) {
+            if (reverseIndex <= numberOfEndDigitsThatNeverAnimate) // don't ever animate; might as well use Text
+               Text(
+                  digitChar.toString(),
+                  Modifier.size(dpSize),
+                  softWrap = false,
+                  style = textStyle
+               )
+            else AnimatedNumberDigit(
                digitChar,
                dpSize,
                digitSize.height,
