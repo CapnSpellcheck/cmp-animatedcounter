@@ -54,10 +54,10 @@ dependencyResolutionManagement {
 ```
 
 ### Add cmp-animatedcounter
-Current version is 1.0.1. You may add something like this to `libs.versions.toml`, don't forget to add the
+Current version is 1.0.2. You may add something like this to `libs.versions.toml`, don't forget to add the
 reference to `commonMain` dependencies.
 ```
-animated-counter = { module = "com.letstwinkle:cmp-animatedcounter", version = "1.0.1" }
+animated-counter = { module = "com.letstwinkle:cmp-animatedcounter", version = "1.0.2" }
 ... build.gradle.kts ...
     implementation(libs.animated.counter)
 ```
