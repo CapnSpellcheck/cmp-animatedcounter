@@ -29,7 +29,7 @@ kotlin {
 
 android {
     namespace = "com.letstwinkle.compose.sample"
-    compileSdk = 34
+    compileSdk = 35
     defaultConfig {
         applicationId = "com.letstwinkle.compose.sample"
         minSdk = 24

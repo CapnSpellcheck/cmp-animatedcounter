@@ -122,7 +122,9 @@ private fun AnimatedNumberDigit(
    val offsetAnimatable = remember(finalDigit, delta, skipControl) {
       Animatable(-delta.toFloat() * heightPx)
    }
+   val digitChar = '8'
 
+//   println("[AnimatedNumberDigit] finalDigit=$finalDigit heightPx=$heightPx delayMsec=$delayMsec durationMsec=$durationMsec delta=$delta skipLastDraw=$omitLastDraw skipControl=$skipControl")
    LaunchedEffect(offsetAnimatable) {
       offsetAnimatable.animateTo(
          0f,
@@ -217,6 +219,6 @@ private fun DrawScope.drawTextUnbounded(
    withTransform({
       translate(topLeft.x, topLeft.y)
    }) {
-      textLayoutResult.multiParagraph.paint(drawContext.canvas, blendMode = DrawScope.DefaultBlendMode)
+      textLayoutResult.multiParagraph.paint(drawContext.canvas)
    }
 }

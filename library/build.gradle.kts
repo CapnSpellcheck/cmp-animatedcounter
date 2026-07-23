@@ -5,13 +5,12 @@ plugins {
     alias(libs.plugins.kotlinMultiplatform)
     alias(libs.plugins.composeMultiplatform)
     alias(libs.plugins.androidLibrary)
-//    alias(libs.plugins.vanniktech.mavenPublish)
     alias(libs.plugins.compose.compiler)
     id("maven-publish")
 }
 
 group = "com.letstwinkle"
-version = "1.0.2"
+version = "1.0.3"
 
 kotlin {
     jvm()
